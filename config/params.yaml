@@ -1,0 +1,5 @@
+   
+base:
+  project: Amazon-Reviews
+  random_state: 42
+  target_col: Rating
