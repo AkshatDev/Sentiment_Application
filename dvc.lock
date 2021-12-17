@@ -1,0 +1,34 @@
+schema: '2.0'
+stages:
+  load_data:
+    cmd: python src/load_data.py --config=config/params.yaml
+    deps:
+    - path: Training_Batch_Files/training_batch.csv
+      md5: 5679eabead10af2bd03bd2e6e529691e
+      size: 390306941
+    - path: src/get_data.py
+      md5: a647e830bfd86ed139733e0c09283b09
+      size: 670
+    - path: src/load_data.py
+      md5: 77136f38c8d252b532dfed877c3e9a63
+      size: 599
+    outs:
+    - path: data/raw/training_batch.csv
+      md5: 3ac0e923d57cfe99dc495301ce37999a
+      size: 389105148
+  split_data:
+    cmd: python src/split_data.py --config=config/params.yaml
+    deps:
+    - path: data/raw/training_batch.csv
+      md5: 3ac0e923d57cfe99dc495301ce37999a
+      size: 389105148
+    - path: src/split_data.py
+      md5: 154b1a42a39f0abe339951834b30caf7
+      size: 1126
+    outs:
+    - path: data/processed/testing_data/test.csv
+      md5: 49290154d8562b2d35cc04f5af4b1ddf
+      size: 77804875
+    - path: data/processed/training_data/train.csv
+      md5: 275f36ad757a87bb936b2bde552b4b58
+      size: 311225763

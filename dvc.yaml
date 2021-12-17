@@ -1,0 +1,17 @@
+stages:
+  load_data:
+    cmd: python src/load_data.py --config=config/params.yaml
+    deps:
+    - src/get_data.py
+    - src/load_data.py
+    - Training_Batch_Files/training_batch.csv
+    outs:
+    - data/raw/training_batch.csv
+  split_data:
+    cmd: python src/split_data.py --config=config/params.yaml
+    deps:
+    - src/split_data.py
+    - data/raw/training_batch.csv
+    outs:
+    - data/processed/training_data/train.csv
+    - data/processed/testing_data/test.csv

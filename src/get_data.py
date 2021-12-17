@@ -13,10 +13,9 @@ def read_params(config_path):
 
 def get_data(config_path):
     config = read_params(config_path)
-    print(config)
-    #data_path = config["data_source"]["batch_files"]
-    #df = pd.read_csv(data_path, sep=",", encoding='utf-8')
-    #return df
+    data_path = config["data_source"]["batch_files"]
+    df = pd.read_csv(data_path, sep=",", encoding='utf-8')
+    return df
 
 
 

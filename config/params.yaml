@@ -3,3 +3,12 @@ base:
   project: Amazon-Reviews
   random_state: 42
   target_col: Rating
+data_source:
+  batch_files: /content/drive/MyDrive/amazon_live/Sentiment_Application/Training_Batch_Files/training_batch.csv
+load_data:
+  raw_dataset_csv: data/raw/training_batch.csv
+
+split_data:
+  train_path: data/processed/training_data/train.csv
+  test_path: data/processed/testing_data/test.csv
+  test_size: 0.2
