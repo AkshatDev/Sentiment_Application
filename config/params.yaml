@@ -12,3 +12,17 @@ split_data:
   train_path: data/processed/training_data/train.csv
   test_path: data/processed/testing_data/test.csv
   test_size: 0.2
+
+estimators:
+  DecisionTrees:
+    params:
+     criterion: gini
+     max_depth: 3
+     min_samples_split: 3
+     min_samples_leaf: 2
+model_dir: src/models
+reports:
+  params: reports/params.json
+  scores: reports/scores.json
+
+webapp_model_dir: prediction_service/model/model.joblib

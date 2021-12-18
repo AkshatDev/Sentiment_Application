@@ -32,3 +32,25 @@ stages:
     - path: data/processed/training_data/train.csv
       md5: 275f36ad757a87bb936b2bde552b4b58
       size: 311225763
+  train_evaluate:
+    cmd: python src/train_evaluate.py --config=config/params.yaml
+    deps:
+    - path: data/processed/testing_data/test.csv
+      md5: 49290154d8562b2d35cc04f5af4b1ddf
+      size: 77804875
+    - path: data/processed/training_data/train.csv
+      md5: 275f36ad757a87bb936b2bde552b4b58
+      size: 311225763
+    - path: src/train_evaluate.py
+      md5: 8eb6bbcf687e2d48c7ec348907cf4782
+      size: 3039
+    outs:
+    - path: reports/params.json
+      md5: 39d855e15e0eff1d03266363568bd048
+      size: 102
+    - path: reports/scores.json
+      md5: fe5064ebc837f543bd242b3d73cf9b26
+      size: 99
+    - path: src/models/model.joblib
+      md5: 7fb45da15b36dc28d0120dc6a911a2aa
+      size: 3134
