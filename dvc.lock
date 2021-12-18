@@ -47,16 +47,16 @@ stages:
     params:
       params.yaml:
         estimators.DecisionTreeClassifier.params.criterion: entropy
-        estimators.DecisionTreeClassifier.params.max_depth: 5
-        estimators.DecisionTreeClassifier.params.min_samples_leaf: 3
-        estimators.DecisionTreeClassifier.params.min_samples_split: 4
+        estimators.DecisionTreeClassifier.params.max_depth: 4
+        estimators.DecisionTreeClassifier.params.min_samples_leaf: 1
+        estimators.DecisionTreeClassifier.params.min_samples_split: 2
     outs:
     - path: reports/params.json
-      md5: 28d8725f46eba2197755c0a46421524c
+      md5: 5c046c57bf9def35bf3bcd2553509d0b
       size: 105
     - path: reports/scores.json
-      md5: 5f1f6df5b5cb9bf7eb4be28bd0fa445c
-      size: 99
+      md5: 8cc3e2edb8339a9e448eb9b53f06687f
+      size: 97
     - path: src/models/model.joblib
-      md5: da281da0904f16f2c6e983db0b5345cf
-      size: 6593
+      md5: be6f00feab911a2a8ba1da3f56c96b1c
+      size: 4289
