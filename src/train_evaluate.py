@@ -28,10 +28,10 @@ def train_and_evaluate(config_path):
     random_state = config["base"]["random_state"]
     model_dir = config["model_dir"]
 
-    criterion = config["estimators"]["DecisionTrees"]["params"]["criterion"]
-    max_depth = config["estimators"]["DecisionTrees"]["params"]["max_depth"]
-    min_samples_split = config["estimators"]["DecisionTrees"]["params"]["min_samples_split"]
-    min_samples_leaf = config["estimators"]["DecisionTrees"]["params"]["min_samples_leaf"]
+    criterion = config["estimators"]["DecisionTreeClassifier"]["params"]["criterion"]
+    max_depth = config["estimators"]["DecisionTreeClassifier"]["params"]["max_depth"]
+    min_samples_split = config["estimators"]["DecisionTreeClassifier"]["params"]["min_samples_split"]
+    min_samples_leaf = config["estimators"]["DecisionTreeClassifier"]["params"]["min_samples_leaf"]
 
     target = [config["base"]["target_col"]]
 
@@ -92,6 +92,6 @@ def train_and_evaluate(config_path):
 
 if __name__=="__main__":
     args = argparse.ArgumentParser()
-    args.add_argument("--config", default="config/params.yaml")
+    args.add_argument("--config", default="params.yaml")
     parsed_args = args.parse_args()
     train_and_evaluate(config_path=parsed_args.config)

@@ -1,23 +1,23 @@
 schema: '2.0'
 stages:
   load_data:
-    cmd: python src/load_data.py --config=config/params.yaml
+    cmd: python src/load_data.py --config=params.yaml
     deps:
     - path: Training_Batch_Files/training_batch.csv
       md5: 5679eabead10af2bd03bd2e6e529691e
       size: 390306941
     - path: src/get_data.py
-      md5: a647e830bfd86ed139733e0c09283b09
-      size: 670
+      md5: f7cb8130fdc3931bc6337710ce6c8018
+      size: 663
     - path: src/load_data.py
-      md5: 77136f38c8d252b532dfed877c3e9a63
-      size: 599
+      md5: 7995944f2762e831240f21e00a9173f5
+      size: 592
     outs:
     - path: data/raw/training_batch.csv
       md5: 3ac0e923d57cfe99dc495301ce37999a
       size: 389105148
   split_data:
-    cmd: python src/split_data.py --config=config/params.yaml
+    cmd: python src/split_data.py --config=params.yaml
     deps:
     - path: data/raw/training_batch.csv
       md5: 3ac0e923d57cfe99dc495301ce37999a
@@ -33,7 +33,7 @@ stages:
       md5: 275f36ad757a87bb936b2bde552b4b58
       size: 311225763
   train_evaluate:
-    cmd: python src/train_evaluate.py --config=config/params.yaml
+    cmd: python src/train_evaluate.py --config=params.yaml
     deps:
     - path: data/processed/testing_data/test.csv
       md5: 49290154d8562b2d35cc04f5af4b1ddf
@@ -42,15 +42,21 @@ stages:
       md5: 275f36ad757a87bb936b2bde552b4b58
       size: 311225763
     - path: src/train_evaluate.py
-      md5: 8eb6bbcf687e2d48c7ec348907cf4782
-      size: 3039
+      md5: 2335d77dd4f562310abec6cf576a4eb8
+      size: 3068
+    params:
+      params.yaml:
+        estimators.DecisionTreeClassifier.params.criterion: entropy
+        estimators.DecisionTreeClassifier.params.max_depth: 5
+        estimators.DecisionTreeClassifier.params.min_samples_leaf: 3
+        estimators.DecisionTreeClassifier.params.min_samples_split: 4
     outs:
     - path: reports/params.json
-      md5: 39d855e15e0eff1d03266363568bd048
-      size: 102
+      md5: 28d8725f46eba2197755c0a46421524c
+      size: 105
     - path: reports/scores.json
-      md5: fe5064ebc837f543bd242b3d73cf9b26
+      md5: 5f1f6df5b5cb9bf7eb4be28bd0fa445c
       size: 99
     - path: src/models/model.joblib
-      md5: 7fb45da15b36dc28d0120dc6a911a2aa
-      size: 3134
+      md5: da281da0904f16f2c6e983db0b5345cf
+      size: 6593
