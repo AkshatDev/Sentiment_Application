@@ -16,3 +16,4 @@ pytest
 tox
 flask
 gunicorn
+gensim
