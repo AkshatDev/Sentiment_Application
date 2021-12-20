@@ -18,4 +18,3 @@ flask
 gunicorn
 gensim
 nltk
-re
