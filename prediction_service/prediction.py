@@ -28,7 +28,8 @@ def clean_input(dict_request):
   config = read_params(params_path)
   w2v_path = config["w2v_path"]
   w2v_model = Word2Vec.load(w2v_path)
-  w2v_words = list(w2v_model.wv.vocab)
+  w2v_words = list(w2v_model.wv.index_to_key)
+
   snow = nltk.stem.SnowballStemmer('english')
   stopwords= set(['br', 'the', 'i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you', "you're", "you've",\
               "you'll", "you'd", 'your', 'yours', 'yourself', 'yourselves', 'he', 'him', 'his', 'himself', \
