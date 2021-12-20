@@ -38,10 +38,10 @@ def train_and_evaluate(config_path):
     train = pd.read_csv(train_data_path)
     test = pd.read_csv(test_data_path)
 
-    train_y = train[target]
+    y_train = train[target]
     test_y = test[target]
 
-    train_x = train.drop(target, axis=1)
+    x_train = train.drop(target, axis=1)
     test_x = test.drop(target, axis=1)
 
     tr = DecisionTreeClassifier(
@@ -50,7 +50,7 @@ def train_and_evaluate(config_path):
         min_samples_split=min_samples_split,
         min_samples_leaf=min_samples_leaf, 
         random_state=random_state)
-    tr.fit(train_x, train_y)
+    tr.fit(x_train.values, y_train)
 
     predicted_qualities = tr.predict(test_x)
     

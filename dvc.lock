@@ -42,21 +42,21 @@ stages:
       md5: 275f36ad757a87bb936b2bde552b4b58
       size: 311225763
     - path: src/train_evaluate.py
-      md5: 2335d77dd4f562310abec6cf576a4eb8
-      size: 3068
+      md5: 8be501a4dc66846996c3024e97c22116
+      size: 3075
     params:
       params.yaml:
         estimators.DecisionTreeClassifier.params.criterion: entropy
-        estimators.DecisionTreeClassifier.params.max_depth: 4
+        estimators.DecisionTreeClassifier.params.max_depth: 8
         estimators.DecisionTreeClassifier.params.min_samples_leaf: 1
         estimators.DecisionTreeClassifier.params.min_samples_split: 2
     outs:
     - path: reports/params.json
-      md5: 5c046c57bf9def35bf3bcd2553509d0b
+      md5: 23fb685000a31f6a3379fe4af09bb618
       size: 105
     - path: reports/scores.json
-      md5: 8cc3e2edb8339a9e448eb9b53f06687f
-      size: 97
+      md5: 7104218a5fb01ef534a5f46b781b9f79
+      size: 98
     - path: src/models/model.joblib
-      md5: be6f00feab911a2a8ba1da3f56c96b1c
-      size: 4289
+      md5: 57cf0627ad38e49e94ce15002ea09f8d
+      size: 37975
