@@ -2,8 +2,6 @@ from flask import Flask, render_template, request, jsonify
 import os
 import numpy as np
 from prediction_service import prediction
-from pyngrok import ngrok
-from flask_ngrok import run_with_ngrok
 
 webapp_root = "webapp"
 
@@ -11,9 +9,6 @@ static_dir = os.path.join(webapp_root, "static")
 template_dir = os.path.join(webapp_root, "templates")
 
 app = Flask(__name__, static_folder=static_dir,template_folder=template_dir)
-run_with_ngrok(app)   
-NGROK_AUTH_TOKEN = "224wCncH7aN2TJpFYf3cU2xafRQ_3QBGAkQXWGRM2L3rMytxR"
-ngrok.set_auth_token(NGROK_AUTH_TOKEN)
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -39,4 +34,4 @@ def index():
         return render_template("index.html")
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host='0.0.0.0', port=5000, debug=True)
