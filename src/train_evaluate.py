@@ -13,6 +13,8 @@ from get_data import read_params
 import argparse
 import joblib
 import json
+import mlflow
+from urllib.parse import urlparse
 
 
 def eval_metrics(actual, pred):
@@ -44,49 +46,46 @@ def train_and_evaluate(config_path):
     x_train = train.drop(target, axis=1)
     test_x = test.drop(target, axis=1)
 
-    tr = DecisionTreeClassifier(
-        criterion=criterion, 
-        max_depth=max_depth,
-        min_samples_split=min_samples_split,
-        min_samples_leaf=min_samples_leaf, 
-        random_state=random_state)
-    tr.fit(x_train.values, y_train)
-
-    predicted_qualities = tr.predict(test_x)
     
-    (rmse, mae, r2) = eval_metrics(test_y, predicted_qualities)
-    print("  RMSE: %s" % rmse)
-    print("  MAE: %s" % mae)
-    print("  R2: %s" % r2)
+################### MLFLOW ###############################
+    mlflow_config = config["mlflow_config"]
+    remote_server_uri = mlflow_config["remote_server_uri"]
 
-#####################################################
-    scores_file = config["reports"]["scores"]
-    params_file = config["reports"]["params"]
+    mlflow.set_tracking_uri(remote_server_uri)
 
-    with open(scores_file, "w") as f:
-        scores = {
-            "rmse": rmse,
-            "mae": mae,
-            "r2": r2
-        }
-        json.dump(scores, f, indent=4)
+    mlflow.set_experiment(mlflow_config["experiment_name"])
 
-    with open(params_file, "w") as f:
-        params = {
-            'criterion':criterion, 
-            'max_depth':max_depth,
-            'min_samples_split':min_samples_split,
-            'min_samples_leaf':min_samples_leaf
-            }
-        json.dump(params, f, indent=4)
-#####################################################
+    with mlflow.start_run(run_name=mlflow_config["run_name"]) as mlops_run:
+        lr = DecisionTreeClassifier(
+            criterion=criterion, 
+            max_depth=max_depth,
+            min_samples_split=min_samples_split,
+            min_samples_leaf=min_samples_leaf, 
+            random_state=random_state)
+        lr.fit(x_train.values, y_train)
 
+        predicted_qualities = lr.predict(test_x)
+        
+        (rmse, mae, r2) = eval_metrics(test_y, predicted_qualities)
 
-    os.makedirs(model_dir, exist_ok=True)
-    model_path = os.path.join(model_dir, "model.joblib")
-    print(model_path)
-    joblib.dump(tr, model_path)
+        mlflow.log_param("criterion", criterion)
+        mlflow.log_param("max_depth", max_depth)
+        mlflow.log_param("min_samples_split", min_samples_split)
+        mlflow.log_param("min_samples_leaf", min_samples_leaf)
 
+        mlflow.log_metric("rmse", rmse)
+        mlflow.log_metric("mae", mae)
+        mlflow.log_metric("r2", r2)
+
+        tracking_url_type_store = urlparse(mlflow.get_artifact_uri()).scheme
+
+        if tracking_url_type_store != "file":
+            mlflow.sklearn.log_model(
+                lr, 
+                "model", 
+                registered_model_name=mlflow_config["registered_model_name"])
+        else:
+            mlflow.sklearn.load_model(lr, "model")
 
 
 

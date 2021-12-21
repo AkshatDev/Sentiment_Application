@@ -18,3 +18,4 @@ flask
 gunicorn
 gensim
 nltk
+mlflow
